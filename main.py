@@ -1,5 +1,5 @@
 #Variables globales
-Clientes = []
+clientes = []
 
 #Creación de clases principales
 class SistemaVeterinaria:
@@ -17,6 +17,9 @@ class SistemaVeterinaria:
             super().__init__(nombre, contacto)
             self.direccion = direccion
             self.mascota = []
+
+        def agregar_mascota(self, mascota):
+            self.mascota.append(mascota)
             
 
     class Mascota:
@@ -51,6 +54,7 @@ def registrar_cliente():
     contacto = input("Ingrese número de contacto del cliente: ")
     direccion = input("Ingrese dirección del cliente: ")
     cliente = SistemaVeterinaria(nombre, contacto, direccion) #Creamos el objeto cliente
+    print("---------------------------------------")
 
     print("----------REGISTRO DE MASCOTAS----------")
     nombre_mascota = input("Nombre de la mascota: ")
@@ -58,6 +62,11 @@ def registrar_cliente():
     raza = input("Raza de la mascota: ")
     mascota = SistemaVeterinaria (nombre_mascota, especie, raza) #Creamos el objeto mascota
 
+    cliente.agregar_mascota(mascota)
+
+    clientes.append(cliente)
+    print("Cliente y mascota agregados correctamente")
+    print("---------------------------------------")
 
 def programar_cita():
     pass
@@ -76,12 +85,12 @@ def menu_principal():
         opcion = input("Seleccione una opción: ")
         
         if opcion == "1":
-            pass
+            registrar_cliente()
         elif opcion == "2":
             pass
         elif opcion == "3":
             pass
-        elif opcion == "4"
+        elif opcion == "4":
             pass
         else:
             print("Opción inválida. Intente nuevamente.")
