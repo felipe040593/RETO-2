@@ -5,7 +5,6 @@ Clientes = []
 class SistemaVeterinaria:
     class Persona: 
         id_counter = 1
-        
         def __init__(self,nombre, contacto):
             self.id = SistemaVeterinaria.Persona.id_counter
             self.nombre = nombre
@@ -17,19 +16,48 @@ class SistemaVeterinaria:
         def __init__(self, nombre, contacto, direccion):
             super().__init__(nombre, contacto)
             self.direccion = direccion
-            self.masota = []
-            
+            self.mascota = []
             
 
     class Mascota:
-        pass
+        id_counter = 1
+        def __init__(self, nombre, especie, raza, edad):
+            self.id = SistemaVeterinaria.Mascota.id_counter
+            self.nombre = nombre
+            self.especie = especie
+            self.raza = raza
+            self.edad = edad
+            self.historial_clinico=[]
+
+            SistemaVeterinaria.Mascota.id_counter += 1
+
 
     class Citas:
-        pass
+        id_counter = 1
+        def __init__(self, fecha, hora, servicio, veterinario):
+            self.id = SistemaVeterinaria.Citas.id_counter
+            self.fecha = fecha
+            self.hora = hora
+            self.servicio = servicio
+            self.veterinario = veterinario
+
+            SistemaVeterinaria.Citas.id_counter += 1
+
     
 #Funcion del sistema
 def registrar_cliente():
-    pass
+    print("----------REGISTRO DE CLIENTE----------")
+    nombre = input("Ingrese nombre del cliente: ")
+    contacto = input("Ingrese número de contacto del cliente: ")
+    direccion = input("Ingrese dirección del cliente: ")
+    cliente = SistemaVeterinaria(nombre, contacto, direccion) #Creamos el objeto cliente
+
+    print("----------REGISTRO DE MASCOTAS----------")
+    nombre_mascota = input("Nombre de la mascota: ")
+    especie = input("Especie de la mascota: ")
+    raza = input("Raza de la mascota: ")
+    mascota = SistemaVeterinaria (nombre_mascota, especie, raza) #Creamos el objeto mascota
+
 
 def programar_cita():
     pass
