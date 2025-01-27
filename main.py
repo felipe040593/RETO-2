@@ -53,14 +53,15 @@ def registrar_cliente():
     nombre = input("Ingrese nombre del cliente: ")
     contacto = input("Ingrese número de contacto del cliente: ")
     direccion = input("Ingrese dirección del cliente: ")
-    cliente = SistemaVeterinaria(nombre, contacto, direccion) #Creamos el objeto cliente
+    cliente = SistemaVeterinaria.Cliente(nombre, contacto, direccion) #Creamos el objeto cliente
     print("---------------------------------------")
 
     print("----------REGISTRO DE MASCOTAS----------")
     nombre_mascota = input("Nombre de la mascota: ")
     especie = input("Especie de la mascota: ")
     raza = input("Raza de la mascota: ")
-    mascota = SistemaVeterinaria (nombre_mascota, especie, raza) #Creamos el objeto mascota
+    edad =  input("Ingrese edad de la mascota: ")
+    mascota = SistemaVeterinaria.Mascota(nombre_mascota, especie, raza, edad) #Creamos el objeto mascota
 
     cliente.agregar_mascota(mascota)
 
@@ -94,4 +95,6 @@ def menu_principal():
             pass
         else:
             print("Opción inválida. Intente nuevamente.")
+
+menu_principal()
         
