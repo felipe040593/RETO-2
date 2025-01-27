@@ -4,56 +4,46 @@ clientes = []
 #Creación de clases principales
 class SistemaVeterinaria:
     class Persona: 
-        id_counter = 1
-        def __init__(self,nombre, contacto):
-            self.id = SistemaVeterinaria.Persona.id_counter
+        def __init__(self,nombre,num_cedula, contacto):
+            self.num_cedula = num_cedula
             self.nombre = nombre
             self.contacto = contacto
             
-            SistemaVeterinaria.Persona.id_counter += 1
-            
     class Cliente(Persona):
-        def __init__(self, nombre, contacto, direccion):
-            super().__init__(nombre, contacto)
+        def __init__(self, nombre, num_cedula, contacto, direccion):
+            super().__init__(nombre,num_cedula, contacto)
             self.direccion = direccion
-            self.mascota = []
+            self.mascotas = []
 
         def agregar_mascota(self, mascota):
-            self.mascota.append(mascota)
+            self.mascotas.append(mascota)
             
 
     class Mascota:
-        id_counter = 1
         def __init__(self, nombre, especie, raza, edad):
-            self.id = SistemaVeterinaria.Mascota.id_counter
             self.nombre = nombre
             self.especie = especie
             self.raza = raza
             self.edad = edad
             self.historial_clinico=[]
 
-            SistemaVeterinaria.Mascota.id_counter += 1
-
-
     class Citas:
-        id_counter = 1
-        def __init__(self, fecha, hora, servicio, veterinario):
-            self.id = SistemaVeterinaria.Citas.id_counter
+        def __init__(self,num_cedula, fecha, hora, servicio, veterinario):
+            self.num_cedula = num_cedula
             self.fecha = fecha
             self.hora = hora
             self.servicio = servicio
             self.veterinario = veterinario
-
-            SistemaVeterinaria.Citas.id_counter += 1
 
     
 #Funcion del sistema
 def registrar_cliente():
     print("----------REGISTRO DE CLIENTE----------")
     nombre = input("Ingrese nombre del cliente: ")
+    num_cedula = input("Ingrese número de cédula del cliente: ")
     contacto = input("Ingrese número de contacto del cliente: ")
     direccion = input("Ingrese dirección del cliente: ")
-    cliente = SistemaVeterinaria.Cliente(nombre, contacto, direccion) #Creamos el objeto cliente
+    cliente = SistemaVeterinaria.Cliente(nombre,num_cedula, contacto, direccion) #Creamos el objeto cliente
     print("---------------------------------------")
 
     print("----------REGISTRO DE MASCOTAS----------")
@@ -70,7 +60,24 @@ def registrar_cliente():
     print("---------------------------------------")
 
 def programar_cita():
-    pass
+    if not clientes:
+        print("No hay clientes registrados.")
+        return
+
+    num_cedula = input("Ingrese el número de cédula del cliente: ")
+    cliente = next((c for c in clientes if c.num_cedula == num_cedula), None)
+
+    if cliente is None:
+        print("Cliente no encontrado.")
+        return
+
+    fecha = input("Ingrese la fecha de la cita (DD/MM/AAAA): ")
+    hora = input("Ingrese la hora de la cita (HH:MM): ")
+    servicio = input("Ingrese el servicio solicitado: ")
+    veterinario = input("Ingrese el nombre del veterinario asignado: ")
+
+    cita = SistemaVeterinaria.Cita(num_cedula, fecha, hora, servicio, veterinario)
+    print(f"Cita programada exitosamente para el cliente {cliente.nombre} el {fecha} a las {hora}.")
 
 def consultar_historia():
     pass
@@ -88,11 +95,11 @@ def menu_principal():
         if opcion == "1":
             registrar_cliente()
         elif opcion == "2":
-            pass
+            programar_cita()
         elif opcion == "3":
             pass
         elif opcion == "4":
-            pass
+            break
         else:
             print("Opción inválida. Intente nuevamente.")
 
