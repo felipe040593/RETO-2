@@ -18,7 +18,6 @@ class SistemaVeterinaria:
         def agregar_mascota(self, mascota):
             self.mascotas.append(mascota)
             
-
     class Mascota:
         def __init__(self, nombre, especie, raza, edad):
             self.nombre = nombre
@@ -60,6 +59,33 @@ def registrar_cliente():
     print("---------------------------------------")
 
 def programar_cita():
+    print("----------PROGRAMAR CITA----------")
+    num_cedula = input("Ingrese el número de cédula del cliente: ")
+    
+    # Buscar el cliente en la lista de clientes
+    cliente_encontrado = None
+    for cliente in clientes:
+        if cliente.num_cedula == num_cedula:
+            cliente_encontrado = cliente
+            break
+    
+    if cliente_encontrado:
+        print(f"Cliente encontrado: {cliente_encontrado.nombre}")
+        fecha = input("Ingrese la fecha de la cita (DD/MM/AAAA): ")
+        hora = input("Ingrese la hora de la cita (HH:MM): ")
+        servicio = input("Ingrese el servicio requerido: ")
+        veterinario = input("Ingrese el nombre del veterinario: ")
+        
+        # Crear la cita
+        cita = SistemaVeterinaria.Citas(num_cedula, fecha, hora, servicio, veterinario)
+        
+        # Aquí podrías agregar la cita a una lista de citas o al historial del cliente
+        print("Cita programada exitosamente.")
+    else:
+        print("Cliente no encontrado. Verifique el número de cédula.")
+    print("----------------------------------")
+
+def consultar_historia():
     if not clientes:
         print("No hay clientes registrados.")
         return
@@ -71,17 +97,15 @@ def programar_cita():
         print("Cliente no encontrado.")
         return
 
-    fecha = input("Ingrese la fecha de la cita (DD/MM/AAAA): ")
-    hora = input("Ingrese la hora de la cita (HH:MM): ")
-    servicio = input("Ingrese el servicio solicitado: ")
-    veterinario = input("Ingrese el nombre del veterinario asignado: ")
-
-    cita = SistemaVeterinaria.Cita(num_cedula, fecha, hora, servicio, veterinario)
-    print(f"Cita programada exitosamente para el cliente {cliente.nombre} el {fecha} a las {hora}.")
-
-def consultar_historia():
-    pass
-
+    print(f"Historial clínico del cliente {cliente.nombre}:")
+    for mascota in cliente.mascotas:
+        print(f"- Mascota: {mascota.nombre}")
+        if mascota.historial_clinico:
+            for entrada in mascota.historial_clinico:
+                print(f"  * {entrada}")
+        else:
+            print("  * Sin historial clínico registrado.")
+            
 #Menú principal
 def menu_principal():
     while True:
@@ -97,8 +121,9 @@ def menu_principal():
         elif opcion == "2":
             programar_cita()
         elif opcion == "3":
-            pass
+            consultar_historia()
         elif opcion == "4":
+            print("Gracias por usar el sistema. ¡Adiós!")
             break
         else:
             print("Opción inválida. Intente nuevamente.")
