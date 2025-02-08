@@ -18,15 +18,15 @@ class SistemaVeterinaria: #Super Clase que permite heredar atributos y métodos 
         def agregar_mascota(self, mascota):  #Función para agregar en la lista mascotas [] cada mascota(s) al respectivo cliente.
             self.mascotas.append(mascota)
             
-    class Mascota:
+    class Mascota: #Clase que permite guardar en cada atributos los datos de la mascota.
         def __init__(self, nombre, especie, raza, edad):
             self.nombre = nombre
             self.especie = especie
             self.raza = raza
             self.edad = edad
-            self.historial_clinico=[]
+            self.historial_clinico=[] #Listamos dentro de la clase mascota el historial clinico de cada mascota.
 
-    class Citas:
+    class Citas: #Clase que permite guardar en cada atributos los datos de la cita.
         def __init__(self,num_cedula, fecha, hora, servicio, veterinario):
             self.num_cedula = num_cedula
             self.fecha = fecha
@@ -36,7 +36,7 @@ class SistemaVeterinaria: #Super Clase que permite heredar atributos y métodos 
 
     
 #Funcion del sistema
-def registrar_cliente():
+def registrar_cliente(): #Función que permite registrar un cliente y su respectiva mascota.
     print("----------REGISTRO DE CLIENTE----------")
     nombre = input("Ingrese nombre del cliente: ")
     num_cedula = input("Ingrese número de cédula del cliente: ")
@@ -52,32 +52,32 @@ def registrar_cliente():
     edad =  input("Ingrese edad de la mascota: ")
     mascota = SistemaVeterinaria.Mascota(nombre_mascota, especie, raza, edad) #Creamos el objeto mascota
 
-    cliente.agregar_mascota(mascota)
+    cliente.agregar_mascota(mascota) #Agregamos la mascota al cliente
 
-    clientes.append(cliente)
+    clientes.append(cliente) #Agregamos el cliente a la lista de clientes
     print("Cliente y mascota agregados correctamente")
     print("---------------------------------------")
 
-def programar_cita():
+def programar_cita(): #Función que permite programar una cita para un cliente.
     print("----------PROGRAMAR CITA----------")
     num_cedula = input("Ingrese el número de cédula del cliente: ")
     
     # Buscar el cliente en la lista de clientes
-    cliente_encontrado = None
+    cliente_encontrado = None #Inicializamos la variable cliente_encontrado en None
     for cliente in clientes:
-        if cliente.num_cedula == num_cedula:
+        if cliente.num_cedula == num_cedula: #Si el número de cédula ingresado es igual al número de cédula del cliente
             cliente_encontrado = cliente
             break
     
-    if cliente_encontrado:
-        print(f"Cliente encontrado: {cliente_encontrado.nombre}")
+    if cliente_encontrado: #Si el cliente fue encontrado
+        print(f"Cliente encontrado: {cliente_encontrado.nombre}") 
         fecha = input("Ingrese la fecha de la cita (DD/MM/AAAA): ")
         hora = input("Ingrese la hora de la cita (HH:MM): ")
         servicio = input("Ingrese el servicio requerido: ")
         veterinario = input("Ingrese el nombre del veterinario: ")
         
         # Crear la cita
-        cita = SistemaVeterinaria.Citas(num_cedula, fecha, hora, servicio, veterinario)
+        cita = SistemaVeterinaria.Citas(num_cedula, fecha, hora, servicio, veterinario) #Creamos el objeto cita
         
         # Aquí podrías agregar la cita a una lista de citas o al historial del cliente
         print("Cita programada exitosamente.")
@@ -85,29 +85,29 @@ def programar_cita():
         print("Cliente no encontrado. Verifique el número de cédula.")
     print("----------------------------------")
 
-def consultar_historia():
-    if not clientes:
+def consultar_historia(): #Función que permite consultar el historial clínico de un cliente.
+    if not clientes: #Si no hay clientes registrados imprimimos mensaje y retornamos
         print("No hay clientes registrados.")
         return
 
-    num_cedula = input("Ingrese el número de cédula del cliente: ")
-    cliente = next((c for c in clientes if c.num_cedula == num_cedula), None)
+    num_cedula = input("Ingrese el número de cédula del cliente: ") #Solicitamos el número de cédula del cliente
+    cliente = next((c for c in clientes if c.num_cedula == num_cedula), None) #Buscamos el cliente en la lista de clientes
 
     if cliente is None:
         print("Cliente no encontrado.")
         return
 
-    print(f"Historial clínico del cliente {cliente.nombre}:")
-    for mascota in cliente.mascotas:
+    print(f"Historial clínico del cliente {cliente.nombre} identificado con cédula {num_cedula}: ") #Imprimimos el historial clínico del cliente con el número de cédula ingresado
+    for mascota in cliente.mascotas: 
         print(f"- Mascota: {mascota.nombre}")
-        if mascota.historial_clinico:
+        if mascota.historial_clinico: 
             for entrada in mascota.historial_clinico:
                 print(f"  * {entrada}")
         else:
             print("  * Sin historial clínico registrado.")
             
 #Menú principal
-def menu_principal():
+def menu_principal(): #Función que muestra el menú principal del sistema
     while True:
         print("----------------MENÚ PRINCIPAL----------------")
         print("1. Registrar cliente y mascotas")
